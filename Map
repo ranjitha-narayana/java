@@ -1,0 +1,35 @@
+package com.company;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class DemoMap {
+    public static void main(String[] args) {
+
+        Map<String,Map> student = new HashMap<String, Map>();
+
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < 3; i++) {
+            ArrayList<String> list = new ArrayList<String>();
+            list.add("1sj17ec01");
+            list.add("1sj17cs02");
+            list.add("1sj17me03");
+
+
+            for (int j = 0; j < 1; j++) {
+                Map<String, String> studentinfo = new HashMap<String, String>();
+                System.out.println("enter " + list.get(i) + "  name: "); //+ " PLACE "  + " BRANCH ");
+                studentinfo.put("name", sc.next());
+                System.out.println("enter " + list.get(i) + " BRANCH: ");
+                studentinfo.put("branch", sc.next());
+                System.out.println("enter " + list.get(i) + " PLACE: ");
+                studentinfo.put("place", sc.next());
+            }
+            Map studentinfo=student.get("1sj17me03");
+            System.out.println(studentinfo);
+        }
+    }
+}
