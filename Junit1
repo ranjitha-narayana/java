@@ -1,0 +1,54 @@
+package com.execptions;
+
+import java.sql.SQLOutput;
+
+class student{
+    private String name;
+    private int USN;
+    private String phone;
+
+    student(){
+    }
+
+
+    public String getName() {
+        System.out.println(name);
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        System.out.println(phone);
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getUSN() {
+        System.out.println(USN);
+        return USN;
+    }
+
+    public void setUSN(int USN) {
+        this.USN = USN;
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        student st = new student();
+        st.setName("praju");
+        st.setUSN(117053);
+        st.setPhone("7996376670");
+        st.getName();
+        st.getUSN();
+        st.getPhone();
+    }
+}
