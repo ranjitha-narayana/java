@@ -1,0 +1,32 @@
+package com.execptions;
+
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class studentTest {
+    @org.junit.jupiter.api.Test
+    void getName() {
+    }
+    @org.junit.jupiter.api.Test
+    void setName() {
+    }
+    @org.junit.jupiter.api.Test
+    void getPhone() {
+    }
+
+    @org.junit.jupiter.api.Test
+    void setPhone() {
+    }
+
+    @org.junit.jupiter.api.Test
+    void getUSN() {
+    }
+    @org.junit.jupiter.api.Test
+    void setUSN() {
+    }
+}
