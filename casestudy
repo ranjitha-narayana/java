@@ -1,0 +1,478 @@
+main class.....
+
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.Scanner;
+
+class Store {
+
+        public void Options() {
+
+            OnlineWeb dm = new OnlineWeb();
+            OnlineUser ou = new OnlineUser();
+            CartDemo1 cd1 = new CartDemo1();
+            Scanner sc = new Scanner(System.in);
+            while (true) {
+
+                System.out.println("1:BookTABLEoptions,2:UserOptions,3:CartOptions,4:exit");
+                System.out.println("enter the option");
+                int option = sc.nextInt();
+                switch (option) {
+                    case 1:
+                        System.out.println("these are  the Book operations");
+                        dm.Option();
+                        break;
+                    case 2:
+                        System.out.println("these are  the user operations");
+                        ou.Option();
+                        break;
+                    case 3:
+                        System.out.println("these are  the cart operations");
+                        cd1.Option();
+                        break;
+                    case 4:
+                        System.exit(0);
+                    default:
+                        System.out.println("enter option correctly");
+                }
+
+            }
+
+        }
+    }
+public class OnlineStore {
+        public static void main(String args[]) {
+           Store os = new Store();
+           os.Options();
+        }
+    }
+
+
+
+Book class....//
+
+
+import java.sql.*;
+import java.util.Scanner;
+
+class OnlineWeb {
+    Connection con=null;
+    Statement stm;
+    String addr = "jdbc:mysql://localhost:3306/eweb";
+    String username = "root";
+    String password = "root";
+    Scanner sc = new Scanner(System.in);
+
+    public void Option() {
+        while(true){
+            Store os=new Store();
+            System.out.println("1:insert,2:remove,3:Display,4:update,5:exit");
+            System.out.println("enter the option");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    insertBook();
+                    break;
+                case 2:
+                    removeBook();
+                    break;
+                case 3:
+                    displayBook();
+                    break;
+                case 4:
+                    updateBook();
+                    break;
+                case 5:
+                    os.Options();
+                    break;
+                default:
+                    System.out.println("enter option correctly");
+            }
+
+        }
+
+    }
+
+    public void insertBook() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connection Established Successfully");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("INSERT INTO Book VALUES(?,?,?,?,?)");
+            System.out.println("enter bookname"); pstm.setString(1, sc.next());             //take buffer reader or Scanner class
+            System.out.println("enter price"); pstm.setInt(2, sc.nextInt());      //System.in
+            System.out.println("enter number of copies"); pstm.setInt(3, sc.nextInt());
+            System.out.println("enter author");pstm.setString(4, sc.next());
+            System.out.println("enter yearofpublish"); pstm.setInt(5, sc.nextInt());
+            int i = pstm.executeUpdate();
+            System.out.println(i + " rows affected");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+            System.out.println("failed..");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+
+
+    public void removeBook () {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connection Established Successfully");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("DELETE FROM Book WHERE bookname = ?");
+            System.out.println("enter the bookname to remove the details");
+            pstm.setString(1, sc.next());
+            int i = pstm.executeUpdate();
+            System.out.println(i + " rows affected");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+            System.out.println("failed..");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public void displayBook() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connected to DB ...");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM Book");
+            ResultSet rs = pstm.executeQuery();
+            System.out.println("---------- DB----------");
+            while (rs.next()) {
+                System.out.println(rs.getString("bookname")+"   "+ rs.getInt("price")+"   "+ rs.getInt("number_of_copies")+"    " + rs.getString("author")+"   " + rs.getInt("yearofpublish"));
+            }
+            System.out.println("rows affected"+rs);
+
+
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+    public void updateBook(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connected to DB ...");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("update Book set bookname = ? where bookname= ?");
+            System.out.println("enter updationbookname"); pstm.setInt(1, sc.nextInt());
+            System.out.println("enter the bookname which u want to update");pstm.setString(2,sc.next());
+             pstm.executeUpdate();
+            System.out.println("---------- DB----------");
+
+            System.out.println("rows affected"+pstm);
+
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+
+}
+
+public class DemoOnline {
+    public static void main(String[] args) {
+        OnlineWeb ow = new OnlineWeb();
+        ow.Option();
+    }
+}
+
+
+
+
+//// user classss.....
+
+
+import java.sql.*;
+import java.util.Scanner;
+
+class OnlineUser {
+    Connection con=null;
+    Statement stm;
+    String addr = "jdbc:mysql://localhost:3306/eweb";
+    String username = "root";
+    String password = "root";
+    Scanner sc = new Scanner(System.in);
+
+    public void Option() {
+        while(true){
+            Store os=new Store();
+            System.out.println("1:adduser,2:removeuser,3:Display,4:updateuser,5:exit");
+            System.out.println("enter the option");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    addUser();
+                    break;
+                case 2:
+                    removeUser();
+                    break;
+                case 3:
+                    displayUser();
+                    break;
+                case 4:
+                    updateUser();
+                    break;
+                case 5:
+                    os.Options();
+                    break;
+                default:
+                    System.out.println("enter option correctly");
+            }
+
+        }
+
+    }
+
+    public void addUser() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connection Established Successfully");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("INSERT INTO user VALUES(?,?,?,?)");
+            System.out.println("enter userid"); pstm.setInt(1, sc.nextInt());             //take buffer reader or Scanner class
+            System.out.println("enter username"); pstm.setString(2, sc.next());      //System.in
+            System.out.println("enter PASSWORD"); pstm.setInt(3, sc.nextInt());
+            System.out.println("enter PLACE");pstm.setString(4, sc.next());
+
+            int i = pstm.executeUpdate();
+            System.out.println(i + " rows affected");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+            System.out.println("failed..");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+
+
+    public void removeUser () {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connection Established Successfully");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("DELETE FROM user WHERE userid = ?");
+            System.out.println("enter the userid to remove the details");
+            pstm.setString(1, sc.next());
+            int i = pstm.executeUpdate();
+            System.out.println(i + " rows affected");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+            System.out.println("failed..");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public void displayUser() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connected to DB ...");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM user WHERE userid = ?");
+            System.out.println("enter userid to know the details"); pstm.setInt(1, sc.nextInt());
+            ResultSet rs = pstm.executeQuery();
+            System.out.println("---------- DB----------");
+            while (rs.next()) {
+                System.out.println(rs.getInt("userid")+"   "+ rs.getString("username")+"   "+ rs.getInt("password")+"    " + rs.getString("place"));
+            }
+            System.out.println("rows affected"+rs);
+
+
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+    public void updateUser(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connected to DB ...");
+            stm = con.createStatement();
+            PreparedStatement pstm = con.prepareStatement("update user set username = ? where userid= ?");
+            System.out.println("enter username that you want to update"); pstm.setString(1, sc.next());
+            System.out.println("enter the userid");pstm.setInt(2,sc.nextInt());
+            pstm.executeUpdate();
+            System.out.println("---------- DB----------");
+
+            System.out.println("rows affected"+pstm);
+
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+
+}
+
+public class User{
+    public static void main(String[] args) {
+        OnlineUser ou = new OnlineUser();
+        ou.Option();
+    }
+}
+
+
+//////Cart class.....
+
+
+
+import java.sql.*;
+import java.util.Scanner;
+
+class CartDemo1 {
+    Connection con = null;
+    Statement stm;
+    String addr = "jdbc:mysql://localhost:3306/eweb";
+    String username = "root";
+    String password = "root";
+    Scanner sc = new Scanner(System.in);
+
+    public void Option() {
+        while (true) {
+            Store os=new Store();
+            System.out.println("1:addBookToCart,2:deleteFromCart,3:DisplayBookFromCart,4:CheckUserInList,5:exit");
+            System.out.println("enter the option");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    addBookToCart();
+                    break;
+                case 2:
+                    deleteFromCart();
+                    break;
+                case 3:
+                    displayFromCart();
+                    break;
+                case 4:
+                    os.Options();
+                    break;
+
+                default:
+                    System.out.println("enter option correctly");
+            }
+
+        }
+
+    }
+
+
+    public void addBookToCart() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connected to DB ...");
+            stm = con.createStatement();
+
+            PreparedStatement pstm = con.prepareStatement("SELECT u.userid,c.bookname FROM user u,cart c WHERE u.userid = ? and c.bookname=?");
+            System.out.println("enter userid to know the details");
+            pstm.setInt(1, sc.nextInt());
+            System.out.println("enter the bookname");
+            pstm.setString(2, sc.next());
+            ResultSet rs = pstm.executeQuery();
+            System.out.println("---------- DB----------");
+            if (rs.next()) {
+
+                System.out.println("userid and bookname is present");
+                System.out.println("update to cart ");
+                PreparedStatement pstm3 = con.prepareStatement("update cart set number_of_copies=number_of_copies+1 where bookname=?");
+                System.out.println("enter bookname");
+                pstm3.setString(1, sc.next());
+                pstm3.executeUpdate();
+            } else {
+
+                System.out.println("bookname is not present add");
+                PreparedStatement pstm1 = con.prepareStatement("insert into cart values(?,?,?)");
+                System.out.println("enter bookname");
+                pstm1.setString(1, sc.next());
+                System.out.println("enter userid");
+                pstm1.setInt(2, sc.nextInt());      //System.in
+                System.out.println("enter number_of_copies");
+                pstm1.setInt(3, sc.nextInt());
+
+                int i = pstm1.executeUpdate();
+                System.out.println(i + " rows affected");
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void deleteFromCart() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connected to DB ...");
+            stm = con.createStatement();
+
+            PreparedStatement pstm = con.prepareStatement("select number_of_copies from cart where bookname=? and number_of_copies>1");
+            System.out.println("enter the bookname present in cart");
+            pstm.setString(1, sc.next());
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                System.out.println("number of copies is greater than 1");
+                System.out.println("delete one copy");
+                PreparedStatement pstm1 = con.prepareStatement("update cart set number_of_copies=number_of_copies-1");
+                pstm1.executeUpdate();
+            } else {
+                System.out.println("number of copies is only one delete");
+                PreparedStatement pstm2 = con.prepareStatement("delete bookname from cart where number_of_copies<=1");
+                pstm2.executeUpdate();
+            }
+
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void displayFromCart() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(addr, username, password);
+            System.out.println("Connected to DB ...");
+            stm = con.createStatement();
+
+            PreparedStatement pstm = con.prepareStatement("select bookname from cart");
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()) {
+                System.out.println("Bookname are:\n" +rs.getString("bookname"));
+
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+}
+public class cart1 {
+    public static void main(String[] args) {
+        CartDemo1 cd1 = new CartDemo1();
+        cd1.Option();
+    }
+}
+
