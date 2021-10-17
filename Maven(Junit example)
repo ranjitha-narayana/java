@@ -1,0 +1,180 @@
+public class Contact {
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+
+    public Contact(String firstName, String lastName, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public void validateFirstName(){
+        if(this.firstName==null)
+            throw new RuntimeException("first name cannot be null");
+    }
+    public void validateLastName(){
+        if(this.lastName==null)
+            throw new RuntimeException("first name cannot be null");
+    }
+    public void validatePhoneNumber(){
+        if(this.phoneNumber==null){
+            throw new RuntimeException(" should not create contact when first name is null");
+        }
+        if(this.phoneNumber.length()!=10) {
+            throw new RuntimeException("Phone number should be 10 digit long");
+        }
+        if(!this.phoneNumber.matches("\\d+")){
+            throw new RuntimeException("phone number should contain only digits");
+        }
+        if(!this.phoneNumber.startsWith("0")){
+            throw new RuntimeException("Phone number start with zero");
+        }
+
+    }
+}
+
+
+
+/////
+
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ContactManager {
+    Map<String, Contact> contactList = new ConcurrentHashMap<String, Contact>();
+        public void addContact(String firstName, String lastName, String phoneNumber) {
+            Contact contact = new Contact(firstName, lastName, phoneNumber);
+            validateContact(contact);
+            CheckIfContactAlreadyExist(contact);
+            contactList.put(generateKey(contact), contact);
+        }
+
+        public Collection<Contact> getAllContacts() {
+            return contactList.values();
+        }
+
+        private String generateKey(Contact contact) {
+            return String.format("%s-%s", contact.getFirstName(), contact.getLastName());
+        }
+
+        private void CheckIfContactAlreadyExist(Contact contact) {
+            if (contactList.containsKey(generateKey(contact))) {
+                throw new RuntimeException("Contact already exist");
+            }
+        }
+
+        private void validateContact(Contact contact) {
+            contact.validateFirstName();
+            contact.validateLastName();
+            contact.validatePhoneNumber();
+        }
+
+
+    }
+    
+    
+
+//////
+
+
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ContactManagerTest {
+    private  static ContactManager contactmanager;
+    @BeforeAll
+    public  static void setupAll(){
+        System.out.println("Instantiating contact manager before the test execution");
+
+    }
+
+
+
+    @BeforeEach
+    public  void setup(){
+        System.out.println("Instantiating contact manager");
+        contactmanager=new ContactManager();
+
+    }
+    @Test
+    @DisplayName("should create contact")
+    public void shouldCreateContact() {
+        ContactManager contactmanager = new ContactManager();
+       contactmanager.addContact("Ranjitha", "A", "0234567834");
+        Assertions.assertFalse(contactmanager.getAllContacts().isEmpty());
+        Assertions.assertEquals(1, contactmanager.getAllContacts().size());
+
+    }
+
+    @Test
+    @DisplayName("SHOULD NOT CREATE CONTACT WHEN FIRST NAME IS NULL")
+    public void throwErrorWhenFirstNameIsNull() {
+        ContactManager contactManager = new ContactManager();
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactManager.addContact(null, "A", "0234567834");
+        });
+    }
+
+    @Test
+    @DisplayName("SHOULD NOT CREATE CONTACT WHEN LAST NAME IS NULL")
+    public void throwErrorWhenLastNameIsNull() {
+        ContactManager contactManager = new ContactManager();
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactManager.addContact("ranjitha", null, "0234567834");
+        });
+    }
+
+    @Test
+    @DisplayName("SHOULD NOT CREATE CONTACT WHEN phone number IS NULL")
+    public void throwErrorWhenPhoneNumberIsNull() {
+        ContactManager contactManager = new ContactManager();
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactManager.addContact("ranjitha", "A", null);
+        });
+    }
+
+@AfterEach
+public void finish(){
+    System.out.println("should execute after each test");
+
+}
+@AfterAll
+public static void finishAll(){
+    System.out.println("should execute at the end of the test");
+    }
+}
+
+
+
+
+
+
