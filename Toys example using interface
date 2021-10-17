@@ -1,0 +1,54 @@
+package com.company;
+
+public interface Toys extends AdvancedToy{
+    public abstract void name();
+    public abstract void Category();
+    public abstract void price();
+
+
+}
+
+
+
+////next 
+
+package com.company;
+
+public interface AdvancedToy {
+    public void color();
+    public void company();
+    public void offer();
+}
+
+
+////
+package com.company;
+
+public class DemoToy implements Toys{
+    public void name() {
+        System.out.println("name of the Toy");
+    }
+    public void Category(){
+        System.out.println("type of toy");
+    }
+    public void price() {
+        System.out.println("price of the toy");
+    }
+
+    public void color(){
+       System.out.println("color of toy");
+    }
+    public void company(){
+        System.out.println("toy manufactured company name");
+    }
+    public void offer(){
+        System.out.println("offers available on toys");
+    }
+    public static void main(String args[]) {
+        DemoToy obj1=new DemoToy();
+        obj1.offer();
+        obj1.color();
+    }
+}
+
+///////
