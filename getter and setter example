@@ -50,3 +50,36 @@ public class Sample1{
         st.getPhone();
     }
 }
+
+
+
+//////way of using 
+
+
+public class TestSample {
+    String Name;
+    String Usn;
+    String Address;
+
+    public String getName() {
+        return Name;
+    }
+    public String getUsn() {
+        return Usn;
+    }
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        this.Address = address;
+    }
+
+    public void setUsn(String Usn) {
+        this.Usn = Usn;
+    }
+
+    public void setName(String name) {
+        this.Name = Name;
+    }
+}
