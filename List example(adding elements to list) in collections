@@ -1,0 +1,25 @@
+package com.company;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DemoList {
+    public static void main(String[] args){
+        ArrayList<String> list=new ArrayList<String>(); {
+            list.add("red");
+            list.add("blue");
+            list.add("green");
+            System.out.println(list);
+            ArrayList<String> list1=new ArrayList<String>();{
+                list1.add("black");
+                list1.add("yellow");
+                System.out.println(list1);
+                list.addAll(list1);
+                System.out.println("Result:"   +list );
+
+            }
+
+
+        }
+    }
+}
