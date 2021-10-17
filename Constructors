@@ -1,0 +1,37 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+    public void operator(int x,int y)
+    {
+        int result=x+y;
+        int sub=x-y;
+        int mul=x*y;
+        int div=x/y;
+        System.out.println("\nusing with parameters");
+        System.out.println("\n Addition:"+result+"\nsubtraction:"+sub+"\nMultiplication"+mul+"\nDivision"+div);
+
+    }
+    public void operator(){
+        System.out.println("enter two values");
+        Scanner sc= new Scanner(System.in);
+        int a=sc.nextInt();
+        int b=sc.nextInt();
+        int add=a+b;
+        int sub=a-b;
+        int mul=a*b;
+        int div=a/b;
+        System.out.println("\nAddition:"+add+"\nsubtraction :"+sub +"\n multiplication:" +mul+ "\n Division:" +div);
+
+    }
+
+    public static void main(String[] args) {
+	// write your code here
+        Main obj=new Main();
+        obj.operator();
+        obj.operator(1,3);
+
+
+    }
+}
