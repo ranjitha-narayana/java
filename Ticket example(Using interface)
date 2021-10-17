@@ -1,0 +1,82 @@
+package com.company;
+
+public interface Ticket {
+    public void Booking();
+    public void TicketDetails();
+    public void Remove();
+}
+
+
+//////
+
+
+package com.company;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class TicketBooking implements Ticket{
+    HashMap<String,HashMap> passenger=new HashMap<String,HashMap>();
+    Scanner sc=new Scanner(System.in);
+    public void Option() {
+        while(true) {
+        System.out.println("1:booking,2:Details,3:remove,4:exit");
+    System.out.println("enter the option");
+    int option=sc.nextInt();
+        switch (option) {
+            case 1:
+                Booking();
+                break;
+            case 2:
+                TicketDetails();
+                break;
+            case 3:
+                Remove();
+                break;
+            case 4:
+                System.exit(0);
+            default:
+                System.out.println("enter option correctly");
+
+        }
+    }
+    }
+    public void Booking(){
+        System.out.println("enter the ticket id");
+        String id=sc.next();
+        HashMap<String,String> details=new HashMap<String,String>();
+        System.out.println("enter the source name");
+        details.put("sourcename",sc.next());
+        System.out.println("enter the destination name");
+        details.put("destinationname",sc.next());
+        System.out.println("enter the Passenger name");
+        details.put("Passengername",sc.next());
+        passenger.put(id,details);
+
+    }
+    public void TicketDetails() {
+        System.out.println("enter the ticket id");
+        String id = sc.next();
+        if (passenger.containsKey(id)) {
+            HashMap details =passenger.get(id);
+            System.out.println("source =" + details.get("sourcename"));
+            System.out.println("destination =" + details.get("destinationname"));
+            System.out.println("name=" + details.get("passengername"));
+        }
+
+    }
+
+    public void Remove(){
+        System.out.println("enter ticket id");
+        String id=sc.next();
+        passenger.remove(id);
+
+        }
+
+    public  static void main(String[] args){
+        TicketBooking tb=new TicketBooking();
+        tb.Option();
+
+    }
+    }
+
