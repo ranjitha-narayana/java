@@ -1,0 +1,66 @@
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class studentTest {
+    public int Square(int i){
+        return i*i;
+    }
+    public int Sum(int a,int b){
+        return a+b;
+    }
+    public int Sub(int a,int b){
+        return a-b;
+    }
+
+}
+
+
+
+//// junit example testing some operations lyk sqare ,add,sub
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class DemoTest {
+    studentTest obj;
+    @BeforeEach
+    public void init(){
+        obj=new studentTest();
+        System.out.println("instance is created");
+    }
+
+    @Test
+    @DisplayName("Square of a number")
+    public void test () {
+        int res=obj.Square(4);
+        assertEquals(16,res);
+        System.out.println(res);
+    }
+    @Test
+    @DisplayName("adding two numbers")
+    public void test1(){
+
+        int res=obj.Sum(4,5);
+
+        assertEquals(9,res);
+        System.out.println(res);
+    }
+    @Test
+    @DisplayName("subtracting two numbers")
+    public void test2(){
+
+        int res=obj.Sub(10,5);
+
+        assertEquals(5,res);
+        System.out.println(res);
+    }
+    @AfterEach
+    public void last(){
+        System.out.println("method executed");
+    }
+
+    }
