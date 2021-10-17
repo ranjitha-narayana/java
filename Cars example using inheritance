@@ -1,0 +1,42 @@
+package com.company;
+
+abstract class  Car{
+    abstract void start();
+    abstract void brake();
+    abstract void  stop();
+
+
+}
+ class Bmw extends Car{
+    void start(){
+        System.out.println("car started ");
+    }
+    void brake(){
+        System.out.println("break is applied");
+    }
+    void stop(){
+        System.out.println("car stopped");
+    }
+    void color(){
+        System.out.println("it is in white");
+    }
+
+}
+class Swift extends Bmw{
+    void run(){
+        System.out.println("gear changed");
+    }
+}
+public class CarDemo{
+    public static void main(String args[]){
+        Car obj=new Bmw();
+        obj.start();
+        Bmw obj3=new Bmw();
+        obj3.color();
+        Swift obj2=new Swift();
+        obj2.run();
+        obj2.brake();
+        obj2.stop();
+
+    }
+}
