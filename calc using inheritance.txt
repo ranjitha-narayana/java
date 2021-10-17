@@ -1,0 +1,96 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Calculator1 {
+    int num1;
+    int num2;
+    int result;
+    int numbers;
+
+    public void add() {
+        Scanner numbers = new Scanner(System.in);
+        System.out.println("enter the first number");
+        num1 = numbers.nextInt();
+        System.out.println("enter the second number");
+        num2 = numbers.nextInt();
+        result = num1 + num2;
+        System.out.println(result);
+    }
+
+    public void sub() {
+        Scanner numbers = new Scanner(System.in);
+        System.out.println("enter the first number");
+        num1 = numbers.nextInt();
+        System.out.println("enter the second number");
+        num2 = numbers.nextInt();
+        result = num1 - num2;
+        System.out.println(result);
+    }
+
+    public void mult() {
+        Scanner numbers = new Scanner(System.in);
+        System.out.println("enter the first number");
+        num1 = numbers.nextInt();
+        System.out.println("enter the second number");
+        num2 = numbers.nextInt();
+        result = num1 * num2;
+        System.out.println(result);
+    }
+
+    public void div() {
+        Scanner numbers = new Scanner(System.in);
+        System.out.println("enter the first number");
+        num1 = numbers.nextInt();
+        System.out.println("enter the second number");
+        num2 = numbers.nextInt();
+        result = num1 / num2;
+        System.out.println(result);
+    }
+}
+class Advancedcalc extends Calculator1{
+    public void checkNumber()
+    {
+         Scanner scan=new Scanner(System.in);
+         System.out.println("enter the number");
+         int num1=scan.nextInt();
+         if(num1%2==0){
+             System.out.println("even");
+        }
+        else {
+            System.out.println("odd");
+        }
+
+    }
+    public void squareroot(){
+        result=numbers*numbers;
+        System.out.println("square root is :"+result);
+
+    }
+}
+
+class  sample{
+    public static void main(String args[]){
+        Calculator1 obj=new Calculator1();
+        Advancedcalc obj1=new Advancedcalc();
+        System.out.println("1:add,2:sub,3:mult,4:div,5:checkingNumber,6:squareroot");
+        Scanner sc=new Scanner(System.in);
+        int option= sc.nextInt();
+        switch(option){
+            case 1:obj.add();
+                break;
+            case 2:obj.sub();
+                break;
+            case 3:obj.mult();
+                break;
+            case 4:obj.div();
+                break;
+            case 5:obj1.checkNumber();
+            break;
+            case 6:obj1.squareroot();
+            break;
+            
+        }
+    }
+}
+
