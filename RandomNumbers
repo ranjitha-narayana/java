@@ -1,0 +1,11 @@
+import java.util.Random;
+public class Main {
+
+    public static void main(String[] args) {
+        // write your code here
+         Random random = new Random();
+         int  num = random.ints(100, 500).findFirst().getAsInt();
+        System.out.println("Random numbers from 100-500:"+num);
+        }
+
+    }
